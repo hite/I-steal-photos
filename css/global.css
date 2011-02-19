@@ -1,0 +1,17 @@
+/**
+* @author hite
+* @e-mail: iamhite@gmail.com
+* @date 2011-02-19
+*/
+#image_gallery{
+	width:0px;
+}
+.image_gallery_outer{
+	width:100%;
+	overflow:auto;
+}
+
+
+.sample-image{
+	vertical-align: top;
+}

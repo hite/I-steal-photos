@@ -1,8 +1,9 @@
-Function.prototype.bind = function(bind){
+Function.prototype.bind = function(){
+	var options = {bind: arguments[0], args: Array.slice(arguments,1)}
 	var self = this;
 	return function(event){
 		var returns = function(){
-			return self.apply(bind || null, self.arguments);
+			return self.apply(options.bind || null, options.args);
 		};
 		return returns();
 	};
@@ -95,10 +96,28 @@ var IC = {
 		}
 		this.url_segs[this.index_pointer] = walker;
 		
+		/*This is wired.If don't do this assignment,
+		 * container in function of justify_gallery is undefined.
+		 */
+		var container = container;
+		var monitor = monitor;
+		var image = new Image();
+		var justify_gallery = function(){
+			var width = this.toInt(this.id(container).offsetWidth)+image.width+5;//5 fix gap
+			this.id(container).style.width = width +"px";
+			
+			if(width>window.screen.availWidth){
+				var outer = this.id(container).parentNode;
+				var scroll_left = outer.scrollLeft ;
+				outer.scrollLeft = scroll_left + image.width;
+			}
+		}.bind(this,image);
 		//
-		var image = document.createElement("img");
+		image.className = "sample-image";
 		image.onload =  function(){
 			this.id(monitor).innerHTML = "Image has loaded ";
+			//
+			justify_gallery();
 			this.image_broken = false
 		}.bind(this);
 		image.onabort = function(){
@@ -110,7 +129,7 @@ var IC = {
 		}.bind(this);
 		
 		image.src = this.url_segs.join("");
-		this.id(monitor).innerHTML = "I am loading ,please wait "
+		this.id(monitor).innerHTML = "Image is loading ,please wait "
 		this.id(container).appendChild(image);
 		
 	}

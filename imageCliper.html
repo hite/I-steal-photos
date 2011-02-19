@@ -3,32 +3,31 @@
  <HEAD>
   <TITLE> New Document </TITLE>
   <META NAME="Generator" CONTENT="EditPlus">
-  <META NAME="Author" CONTENT="">
-  <META NAME="Keywords" CONTENT="">
-  <META NAME="Description" CONTENT="">
- </HEAD>
-<SCRIPT LANGUAGE="JavaScript">
-<!--
-	window.addEventListener("load",function(){
-		IC.url_analyser(IC.id("motherURL").value);
-		IC.show_url("dynm_url");
-
-		IC.id("next").addEventListener("click",function(){
-			IC.next_url("image_gallery","monitor");
-			IC.id("dynm_url").removeAllChildren();
-			IC.show_url("dynm_url");
-		},false);
-
-		IC.id("reAnalyze").addEventListener("click",function(){
-			IC.id("dynm_url").removeAllChildren();
+  <link rel="stylesheet" href="css/global.css" type="text/css">
+	<SCRIPT LANGUAGE="JavaScript">
+	<!--
+		window.addEventListener("load",function(){
 			IC.url_analyser(IC.id("motherURL").value);
 			IC.show_url("dynm_url");
-		},false);
-		
-	},true);
+			//
+	
+			IC.id("next").addEventListener("click",function(){
+				IC.next_url("image_gallery","monitor");
+				IC.id("dynm_url").removeAllChildren();
+				IC.show_url("dynm_url");
+			},false);
+	
+			IC.id("reAnalyze").addEventListener("click",function(){
+				IC.id("dynm_url").removeAllChildren();
+				IC.url_analyser(IC.id("motherURL").value);
+				IC.show_url("dynm_url");
+			},false);
+			
+		},true);
 
-//-->
-</SCRIPT>
+	//-->
+	</SCRIPT>
+ </HEAD>
  <BODY>
  	<div>	  
  		<P>Input your magic url which i will analyze</P>
@@ -41,7 +40,9 @@
  	<div>
 		<input name="next" id="next" value ="next" type="button" text="next"/><span id="monitor"></span>
  	</div>
- 	<div id="image_gallery">
+ 	<div class="image_gallery_outer">
+	 	<div id="image_gallery">
+	 	</div>
  	</div>
  </BODY>
  <script type="text/javascript"src="js/core.js"></script>
