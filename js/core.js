@@ -25,6 +25,7 @@ var IC = {
 	//
 	image_broken:true,
 	index_pointer:-1,
+	last_image:null,
 	url_segs:[],
 	//
 	url_analyser:function(url){
@@ -105,20 +106,14 @@ var IC = {
 		var justify_gallery = function(){
 			var width = this.toInt(this.id(container).offsetWidth)+image.width+5;//5 fix gap
 			this.id(container).style.width = width +"px";
-			
-			if(width>window.screen.availWidth){
-				var outer = this.id(container).parentNode;
-				var scroll_left = outer.scrollLeft ;
-				outer.scrollLeft = scroll_left + image.width;
-			}
 		}.bind(this,image);
 		//
 		image.className = "sample-image";
 		image.onload =  function(){
 			this.id(monitor).innerHTML = "Image has loaded ";
-			//
 			justify_gallery();
-			this.image_broken = false
+			//
+			this.image_broken = false;
 		}.bind(this);
 		image.onabort = function(){
 			this.id(monitor).innerHTML = "Loading is aborted ";
@@ -129,9 +124,14 @@ var IC = {
 		}.bind(this);
 		
 		image.src = this.url_segs.join("");
-		this.id(monitor).innerHTML = "Image is loading ,please wait "
-		this.id(container).appendChild(image);
-		
+		this.id(monitor).innerHTML = "Image is loading ,please wait ";
+		if(this.last_image == null){
+			this.id(container).appendChild(image);
+		}else{
+			this.id(container).insertBefore(image,this.last_image);
+		}
+		//
+		this.last_image = image;
 	}
 }
 

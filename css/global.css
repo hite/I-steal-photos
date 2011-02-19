@@ -3,6 +3,11 @@
 * @e-mail: iamhite@gmail.com
 * @date 2011-02-19
 */
+   #dynm_url{
+	-moz-border-radius: 1px 1px 1px 1px;
+    -moz-box-shadow: 1px 1px 4px #FFFFFF;
+    color: CornflowerBlue;
+   }
 #image_gallery{
 	width:0px;
 }
