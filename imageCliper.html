@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+  <TITLE> New Document </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+ </HEAD>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	window.addEventListener("load",function(){
+		IC.url_analyser(IC.id("motherURL").value);
+		IC.show_url("dynm_url");
+
+		IC.id("next").addEventListener("click",function(){
+			IC.next_url("image_gallery","monitor");
+			IC.id("dynm_url").removeAllChildren();
+			IC.show_url("dynm_url");
+		},false);
+
+		IC.id("reAnalyze").addEventListener("click",function(){
+			IC.id("dynm_url").removeAllChildren();
+			IC.url_analyser(IC.id("motherURL").value);
+			IC.show_url("dynm_url");
+		},false);
+		
+	},true);
+
+//-->
+</SCRIPT>
+ <BODY>
+ 	<div>	  
+ 		<P>Input your magic url which i will analyze</P>
+ 		<textarea cols="100" rows="2" id="motherURL">http://fs2ew.redirectme.net/girl/67/01.jpg</textarea>
+ 		<input id="reAnalyze" type="button" value="reAnalyze">
+ 	</div>
+ 	<label> Here is the next image url :</label>
+ 	<div id="dynm_url">
+ 	</div>
+ 	<div>
+		<input name="next" id="next" value ="next" type="button" text="next"/><span id="monitor"></span>
+ 	</div>
+ 	<div id="image_gallery">
+ 	</div>
+ </BODY>
+ <script type="text/javascript"src="js/core.js"></script>
+</HTML>
