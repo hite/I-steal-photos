@@ -8,15 +8,17 @@
     -moz-box-shadow: 1px 1px 4px #FFFFFF;
     color: CornflowerBlue;
    }
-#image_gallery{
-	width:0px;
-}
-.image_gallery_outer{
-	width:100%;
-	overflow:auto;
-}
-
-
-.sample-image{
-	vertical-align: top;
-}
+   #dynm_url input{
+   }
+	#image_gallery{
+		width:0px;
+	}
+	.image_gallery_outer{
+		width:100%;
+		overflow:auto;
+	}
+	
+	
+	.sample-image{
+		vertical-align: top;
+	}
