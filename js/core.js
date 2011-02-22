@@ -38,8 +38,16 @@ var IC = {
 	last_image:null,
 	url_segs:[],
 	//
-	url_analyser:function(url){
+	reset:function(){
 		this.url_segs.length = 0;
+		this.image_broken = false;
+		this.continuous_broken = false;
+		this.index_pointer = -1;
+		this.last_position = -1,
+		this.number_rollen.length = 0;
+	}
+	url_analyser:function(url){
+		this.reset();
 		//http://fs2ew.redirectme.net/girl/67/01.jpg
 		var segs = url.split(/(\/){1}/);
 		this.url_segs = segs;
