@@ -20,10 +20,18 @@ var IC = {
 		return document.getElementById(id);
 	},
 	toInt:function(value){
-		return parseInt(value,10);
+		var result = parseInt(value,10);
+		if(isNaN(result)){
+			var tmp = /(\d)+?$/.exec(value);
+			if(tmp){
+				result = parseInt(tmp[0],10);
+			}
+		}
+		return result;
 	},
 	//
-	image_broken:true,
+	image_broken:false,
+	continuous_broken:false,
 	index_pointer:-1,
 	last_position:-1,
 	number_rollen:[],
@@ -66,7 +74,7 @@ var IC = {
 		}
 		this.id(div).appendChild(frag);
 	},
-	locate_index_pointer:function(){
+	locate_last_position:function(){
 		for(var i=this.index_pointer;i>=this.last_position;i--){
 			var pad = this.url_segs[i].length;
 			this.url_segs[i] = "";
@@ -79,19 +87,36 @@ var IC = {
 		for(var i=this.last_position-1;i>=0;i--){
 			if(this.number_rollen[i]){
 				
-				var walker = this.toInt(this.url_segs[i]);
-				walker++;
-				this.url_segs[i] = walker;
+				var walker = this.url_segs[i];
+				var walker2 = this.toInt(walker);
+				walker2++;
+				this.url_segs[i] =  walker.slice(0,-1*walker2.toString())+walker2;
 				
 				this.last_position = i;
 				break;
 			}
 		}
 	},
+	increase_last_position:function(){
+		for(var i=this.index_pointer;i>this.last_position;i--){
+			var pad = this.url_segs[i].length;
+			this.url_segs[i] = "";
+			while(pad){
+				this.url_segs[i] +="0";
+				pad--;
+			}
+		}
+		
+		var walker = this.url_segs[this.last_position];
+		var walker2 = this.toInt(walker);
+		walker2++;
+		this.url_segs[this.last_position] =  walker.slice(0,-1*walker2.toString())+walker2;
+	},
 	next_url:function(container,monitor){
-		if(this.image_broken){
-			this.locate_index_pointer();
-			this.image_broken = false;
+		if(this.continuous_broken){
+			this.locate_last_position();
+		}else if(this.image_broken){
+			this.increase_last_position();
 		}
 		
 		var walker =  this.url_segs[this.index_pointer];
@@ -99,11 +124,8 @@ var IC = {
 		walker2++;
 		
 		var pad_length = walker.length-walker2.toString().length;
-		while(pad_length){
-			walker2 = "0"+ walker2;
-			pad_length--;
-		}
-		walker = walker2;
+		walker = walker.slice(0,-1*pad_length);
+		walker = walker + walker2;
 	
 		this.url_segs[this.index_pointer] = walker;
 		
@@ -129,6 +151,7 @@ var IC = {
 			//
 			this.last_image = image;
 			//
+			this.continuous_broken = false;
 			this.image_broken = false;
 		}.bind(this);
 		image.onabort = function(){
@@ -136,6 +159,9 @@ var IC = {
 		}.bind(this);
 		image.onerror = function(){
 			this.id(monitor).innerHTML = "Image is not found, and url will change backward ";
+			if(this.image_broken){
+				this.continuous_broken = true;
+			}
 			this.image_broken = true;
 		}.bind(this);
 		
