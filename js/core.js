@@ -45,7 +45,7 @@ var IC = {
 		this.index_pointer = -1;
 		this.last_position = -1,
 		this.number_rollen.length = 0;
-	}
+	},
 	url_analyser:function(url){
 		this.reset();
 		//http://fs2ew.redirectme.net/girl/67/01.jpg
