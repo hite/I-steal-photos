@@ -22,6 +22,10 @@
 				IC.url_analyser(IC.id("motherURL").value);
 				IC.show_url("dynm_url");
 			},false);
+			//
+			IC.id("urlPool").addEventListener("change",function(){
+				IC.id("motherURL").value = this.options[this.selectedIndex].text;	
+			},false);
 			
 		},true);
 
@@ -31,13 +35,13 @@
  <BODY>
  	<div>	  
  		<P>Input your magic url which i will analyze (If you have no idea about how to use,just click Next button;[Note:i debug in Firefox..]</P>
- 		<label>Exeample:</label>
- 		<select>
+ 		<label>Example:</label>
+ 		<select id="urlPool">
  			<option value="">http://zhaiyx.com/wp-content/uploads/2010/09/18.jpg</option>
- 			<option value="">http://robertwuhlshow.com/wp-content/uploads/2011/01/001.jpg</option>
+ 			<option value="">http://robertwuhlshow.com/wp-content/uploads/2011/01/021.jpg</option>
  		</select>
  		<p>I suggest you googling using 'inurl:/wp-content/uploads/ 01.jpg' keyword.</p>
- 		<textarea cols="100" rows="1" id="motherURL">http://robertwuhlshow.com/wp-content/uploads/2011/01/001.jpg</textarea>
+ 		<textarea cols="100" rows="1" id="motherURL">http://robertwuhlshow.com/wp-content/uploads/2011/01/021.jpg</textarea>
  		<input id="reAnalyze" type="button" value="reAnalyze">
  	</div>
  	<label> Here is the next image url :If you are stuck because of wrong url,just Refresh)</label>
