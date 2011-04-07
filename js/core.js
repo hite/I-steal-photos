@@ -100,9 +100,8 @@ var IC = {
 			if(this.number_rollen[i]){
 				
 				var walker = this.url_segs[i];
-				var walker2 = this.toInt(walker);
-				walker2++;
-				this.url_segs[i] =  ""+walker2;
+				walker = this.next_Number(walker);
+				this.url_segs[i] =  walker;
 				/* What a pity! i already don't understand why i slice it.
 				 * this.url_segs[i] =  walker.slice(0,-1*walker2.toString())+walker2;
 				*/
@@ -122,9 +121,8 @@ var IC = {
 		}
 		
 		var walker = this.url_segs[this.last_position];
-		var walker2 = this.toInt(walker);
-		walker2++;
-		this.url_segs[this.last_position] =  ""+walker2;
+		walker = this.next_Number(walker);
+		this.url_segs[this.last_position] =  walker;
 	},
 	next_url:function(container,monitor){
 		if(this.continuous_broken){
@@ -134,19 +132,7 @@ var IC = {
 		}
 		
 		var walker =  this.url_segs[this.index_pointer];
-		var walker2 = this.toInt(walker);
-		walker2++;
-		
-		var pad_length = walker.length-walker2.toString().length;
-		/*Regarding this fact;we trim 10000's first number to 0000, 
-		 * and then convert to string '0000';
-		 * */
-		if(pad_length){
-			walker = Math.pow(10,pad_length).toString().slice(1);
-		}else{
-			walker ="";
-		}
-		walker = walker + walker2;
+		walker = this.next_Number(walker);
 	
 		this.url_segs[this.index_pointer] = walker;
 		
@@ -190,6 +176,22 @@ var IC = {
 		image.src = this.url_segs.join("");
 		this.id(monitor).innerHTML = "Image is loading ,please wait ";
 		
+	},
+	next_Number:function(walker){
+		var walker2 = this.toInt(walker);
+		walker2++;
+		
+		var pad_length = walker.length-walker2.toString().length;
+		/*Regarding this fact;we trim 10000's first number to 0000, 
+		 * and then convert to string '0000';
+		 * */
+		if(pad_length){
+			walker = Math.pow(10,pad_length).toString().slice(1);
+		}else{//skip case of pad_length = 0;
+			walker = "";
+		}
+		
+		return walker + walker2;
 	}
 }
 
