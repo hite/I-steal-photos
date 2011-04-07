@@ -84,11 +84,15 @@ var IC = {
 	},
 	locate_last_position:function(){
 		for(var i=this.index_pointer;i>=this.last_position;i--){
-			var pad = this.url_segs[i].length;
-			this.url_segs[i] = "";
-			while(pad){
-				this.url_segs[i] +="0";
-				pad--;
+			/*把以前参与计数的都清零*/
+			if(this.number_rollen[i]){
+				var pad = this.url_segs[i].length;
+				this.url_segs[i] = "";
+				//如果前导为0，则补充
+				while(pad){
+					this.url_segs[i] +="0";
+					pad--;
+				}
 			}
 		}
 		
@@ -98,8 +102,10 @@ var IC = {
 				var walker = this.url_segs[i];
 				var walker2 = this.toInt(walker);
 				walker2++;
-				this.url_segs[i] =  walker.slice(0,-1*walker2.toString())+walker2;
-				
+				this.url_segs[i] =  ""+walker2;
+				/* What a pity! i already don't understand why i slice it.
+				 * this.url_segs[i] =  walker.slice(0,-1*walker2.toString())+walker2;
+				*/
 				this.last_position = i;
 				break;
 			}
@@ -118,7 +124,7 @@ var IC = {
 		var walker = this.url_segs[this.last_position];
 		var walker2 = this.toInt(walker);
 		walker2++;
-		this.url_segs[this.last_position] =  walker.slice(0,-1*walker2.toString())+walker2;
+		this.url_segs[this.last_position] =  ""+walker2;
 	},
 	next_url:function(container,monitor){
 		if(this.continuous_broken){
@@ -132,7 +138,14 @@ var IC = {
 		walker2++;
 		
 		var pad_length = walker.length-walker2.toString().length;
-		walker = walker.slice(0,-1*pad_length);
+		/*Regarding this fact;we trim 10000's first number to 0000, 
+		 * and then convert to string '0000';
+		 * */
+		if(pad_length){
+			walker = Math.pow(10,pad_length).toString().slice(1);
+		}else{
+			walker ="";
+		}
 		walker = walker + walker2;
 	
 		this.url_segs[this.index_pointer] = walker;
@@ -168,6 +181,7 @@ var IC = {
 		image.onerror = function(){
 			this.id(monitor).innerHTML = "Image is not found, and url will change backward ";
 			if(this.image_broken){
+				//如果连续链接断，则移动滑标
 				this.continuous_broken = true;
 			}
 			this.image_broken = true;
